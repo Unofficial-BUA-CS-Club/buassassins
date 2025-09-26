@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(session({
     name: 'sid',
-    secret: process.env.SESSION_SECRET || 'child_prevention_measures',
+    secret: process.env.SESSION_SECRET || 'bua-assassins-very-secret-cool-encryption',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -26,8 +26,14 @@ app.get("/", (req, res) => {
         req.session.logged_in = false;
     } else {
         req.session.logged_in = true;
-        res.send("Ppenis");
+        res.redirect("/login")
     }
 })
 
-app.listen(port)
+app.post("/login", (req, res) => {
+
+});
+
+app.listen(port, () => {
+    console.log(`NodeJS app running on :${port}`)
+});
