@@ -7,6 +7,8 @@ const port = 80;
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 app.use(session({
     name: 'sid',
@@ -23,15 +25,25 @@ app.use(session({
 app.get("/", (req, res) => {
     if (req.session.logged_in) {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
-        req.session.logged_in = false;
     } else {
-        req.session.logged_in = true;
         res.redirect("/login")
     }
 })
 
-app.post("/login", (req, res) => {
+app.get("/login", (req, res) => {
+    if (!req.session.logged_in) {
+        res.sendFile(path.join(__dirname, 'public', 'login', 'index.html'))
+    } else {
+        res.redirect("/")
+    }
+})
 
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+    if (username === "admin" && password === "password") {
+        req.session.logged_in = true;
+        res.redirect("/")
+    }
 });
 
 app.listen(port, () => {
