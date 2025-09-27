@@ -1,5 +1,8 @@
 const express = require("express");
 const path = require("path");
+const bcrypt = require("bcrypt");
+
+const { Sequelize, DataTypes } = require("sequelize")
 
 const app = express();
 const port = 80;
@@ -22,6 +25,35 @@ app.use(session({
     }
 }));
 
+const sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: "database.sqlite"
+});
+
+const User = sequelize.define("User", {
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        unique: true,
+        primaryKey: true,
+        autoIncrement: true
+    }
+})
+
+sequelize.sync().then(() => {
+    console.log("SQLite database synced!");
+});
+
+// Root
 app.get("/", (req, res) => {
     if (req.session.logged_in) {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -30,6 +62,7 @@ app.get("/", (req, res) => {
     }
 })
 
+// User login
 app.get("/login", (req, res) => {
     if (!req.session.logged_in) {
         res.sendFile(path.join(__dirname, 'public', 'login', 'index.html'))
@@ -38,17 +71,42 @@ app.get("/login", (req, res) => {
     }
 })
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
     const { username, password } = req.body;
-    if (username === "admin" && password === "password") {
+    const user = await User.findOne({ where: { username:username } });
+    if (user && await bcrypt.compare(password, user.password)) {
         req.session.logged_in = true;
         res.redirect("/")
+    } else {
+        res.redirect("/login")
     }
 });
 
+// User logout
 app.get("/logout", (req, res) => {
     req.session.logged_in = false;
     res.redirect("/login");
+});
+
+// User registration
+app.get("/register", (req, res) => {
+    if (!req.session.logged_in) {
+        res.sendFile(path.join(__dirname, 'public', 'register', 'index.html'))
+    } else {
+        res.redirect("/")
+    }
+})
+
+app.post("/register", async(req, res) => {
+    const { username, password } = req.body;
+    const existingUser = await User.findOne({ where: { username:username } })
+    if (existingUser === null) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await User.create({ username:username, password:hashedPassword });
+        res.redirect("/login");
+    } else {
+        res.redirect("/register");
+    }
 });
 
 app.listen(port, () => {
