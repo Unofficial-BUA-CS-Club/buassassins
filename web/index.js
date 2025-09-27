@@ -46,6 +46,11 @@ app.post("/login", (req, res) => {
     }
 });
 
+app.get("/logout", (req, res) => {
+    req.session.logged_in = false;
+    res.redirect("/login");
+});
+
 app.listen(port, () => {
     console.log(`NodeJS app running on :${port}`)
 });
