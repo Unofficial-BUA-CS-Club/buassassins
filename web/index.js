@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const bcrypt = require("bcrypt");
 
-const { Sequelize, DataTypes } = require("sequelize")
+const { Sequelize, DataTypes } = require("sequelize");
 
 const app = express();
 const port = 80;
@@ -58,16 +58,16 @@ app.get("/", (req, res) => {
     if (req.session.logged_in) {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
     } else {
-        res.redirect("/login")
+        res.redirect("/login");
     }
 })
 
 // User login
 app.get("/login", (req, res) => {
     if (!req.session.logged_in) {
-        res.sendFile(path.join(__dirname, 'public', 'login', 'index.html'))
+        res.sendFile(path.join(__dirname, 'public', 'login', 'index.html'));
     } else {
-        res.redirect("/")
+        res.redirect("/");
     }
 })
 
@@ -78,7 +78,7 @@ app.post("/login", async (req, res) => {
         req.session.logged_in = true;
         res.redirect("/")
     } else {
-        res.redirect("/login")
+        res.redirect("/login");
     }
 });
 
@@ -91,9 +91,9 @@ app.get("/logout", (req, res) => {
 // User registration
 app.get("/register", (req, res) => {
     if (!req.session.logged_in) {
-        res.sendFile(path.join(__dirname, 'public', 'register', 'index.html'))
+        res.sendFile(path.join(__dirname, 'public', 'register', 'index.html'));
     } else {
-        res.redirect("/")
+        res.redirect("/");
     }
 })
 
@@ -110,5 +110,5 @@ app.post("/register", async(req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`NodeJS app running on :${port}`)
+    console.log(`NodeJS app running on :${port}`);
 });
