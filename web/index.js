@@ -25,6 +25,8 @@ app.use(session({
     }
 }));
 
+app.use("/static", express.static(path.join(__dirname, 'static')))
+
 const sequelize = new Sequelize({
     dialect: "sqlite",
     storage: "database.sqlite"

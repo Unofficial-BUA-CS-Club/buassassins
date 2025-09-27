@@ -2,13 +2,17 @@
 <html>
     <head>
         <title>Register</title>
+        <link rel="stylesheet" href="/static/index.css">
     </head>
     <body>
-        <form method="post" action="/register">
+        <form method="post" action="/register" class="login">
+            <h3>Register</h3>
+            <p>Register for BUA Assassins to play!</p>
             <input name="username" placeholder="Username" required>
             <input name="password" type="password" placeholder="Password" required>
             <button type="submit">Register</button>
+            <div class="divider">or</div>
+            <a href="/login">Login</a>
         </form>
-        <a href="/login">Or login</a>
     </body>
 </html>
