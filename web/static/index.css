@@ -117,10 +117,29 @@ a {
     color: var(--accent);
 
     font-family: var(--font);
+
+    display: flex;
+    align-items: center;
+    flex-direction:column;
 }
 
 a:hover {
     color: var(--accent-dark);
+}
+
+a::after {
+    content: "";
+    display: block;
+    width: 0px;
+    height: 2px;
+    transform: translateY(2.5px);
+    background: var(--accent);
+    transition: width ease-in-out 150ms;
+}
+
+a:hover::after {
+    width: 100%;
+    background: var(--accent-dark);
 }
 
 form.login {
