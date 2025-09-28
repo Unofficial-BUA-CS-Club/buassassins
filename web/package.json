@@ -11,6 +11,9 @@
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
-    "express-session": "^1.18.2"
+    "express-session": "^1.18.2",
+    "bcrypt": "^6.0.0",
+    "sqlite3": "^5.1.7",
+    "sequelize": "^6.37.7"
   }
 }
