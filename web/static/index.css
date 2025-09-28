@@ -13,6 +13,19 @@
     --mg: #efefef;
     --fg: #d3d3d3;
     --text: #333333;
+
+    /* Borders */
+    --br-small: 0.5cqh;
+    --br-med: 1cqh;
+    --br-large: 1.5cqh;
+
+    /* Spacing */
+    --padding-sm: 6px;
+    --padding-med: 8px;
+    --padding-large: 16px;
+
+    /* Fonts */
+    --font: sans-serif;
 }
 
 /* Color themes */
@@ -31,21 +44,11 @@
 
         /* Color varients */
         --fg-dark: #dedede;
-
-        /* Borders */
-        --br-small: 6px;
-        --br-med: 8px;
-        --br-large: 16px;
-
-        /* Spacing */
-        --padding-sm: 6px;
-        --padding-med: 8px;
-        --padding-large: 16px;
-
-        /* Fonts */
-        --font: sans-serif;
     }
 }
+
+
+/* Desktop */
 
 /* Backgrounds and document flow */
 html {
@@ -132,7 +135,7 @@ form.login {
 
 form.login input {
     width: 95%;
-    aspect-ratio: 12;
+    height: 24px;
     
     border-radius: var(--br-med);
 
@@ -141,7 +144,7 @@ form.login input {
 
 form.login button {
     width: 35%;
-    aspect-ratio: 4;
+    height: 36px;
 
     border-radius: var(--br-med);
 
@@ -195,7 +198,26 @@ form.login p {
 }
 
 form.login h3 {
-    font-size: 24px;
+    font-size: 240%;
     margin: 0px;
     padding: 0px;
+}
+
+@media (max-width: 1000px) {
+    form.login button {
+        width: 95%;
+        height: 40px;
+        font-size: 24px;
+    }
+
+    form.login input {
+        width: 95%;
+        height: 40px;
+        font-size: 24px;
+    }
+
+    form.login {
+        width: 55%;
+        transform: scale(1.5) translate(-33%, -33%);
+    }
 }
