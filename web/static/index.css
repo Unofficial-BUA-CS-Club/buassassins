@@ -178,10 +178,13 @@ form.login button {
     border-radius: var(--br-med);
 
     background: var(--accent);
+
+    transition: 120ms ease-in-out;
 }
 
 form.login button:hover {
     background: var(--accent-dark);
+    transform: scale(1.1) rotate(1deg);
 }
 
 form.login .divider {
