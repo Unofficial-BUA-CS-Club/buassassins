@@ -9,10 +9,31 @@
 /* Variables */
 :root {
     /* Colors */
-    --bg: #ffffff;
-    --mg: #efefef;
-    --fg: #d3d3d3;
-    --text: #333333;
+    --bg: #f1f1f1;
+    --mg: #e3e3e3;
+    --fg: #e3e3e3;
+
+    --text: #222222;
+    --text-fg: #333333;
+
+    --accent: #e31f8e;
+    --accent-dark: #c41c7b;
+
+    /* Color variants */
+    --fg-dark: #2d2d2d;
+
+    /* Borders */
+    --br-small: 0.5cqh;
+    --br-med: 1cqh;
+    --br-large: 1.5cqh;
+
+    /* Spacing */
+    --padding-sm: 6px;
+    --padding-med: 8px;
+    --padding-large: 16px;
+
+    /* Fonts */
+    --font: sans-serif;
 }
 
 /* Color themes */
@@ -21,7 +42,7 @@
         /* Colors */
         --bg: #3e3e3e;
         --mg: #2f2f2f;
-        --fg: #e3e3e3;
+        --fg: #2b2b2b;
 
         --text: #ffffff;
         --text-fg: #333333;
@@ -29,23 +50,13 @@
         --accent: #e31f8e;
         --accent-dark: #c41c7b;
 
-        /* Color varients */
+        /* Color variants */
         --fg-dark: #dedede;
-
-        /* Borders */
-        --br-small: 6px;
-        --br-med: 8px;
-        --br-large: 16px;
-
-        /* Spacing */
-        --padding-sm: 6px;
-        --padding-med: 8px;
-        --padding-large: 16px;
-
-        /* Fonts */
-        --font: sans-serif;
     }
 }
+
+
+/* Desktop */
 
 /* Backgrounds and document flow */
 html {
@@ -106,10 +117,29 @@ a {
     color: var(--accent);
 
     font-family: var(--font);
+
+    display: flex;
+    align-items: center;
+    flex-direction:column;
 }
 
 a:hover {
     color: var(--accent-dark);
+}
+
+a::after {
+    content: "";
+    display: block;
+    width: 0px;
+    height: 2px;
+    transform: translateY(2.5px);
+    background: var(--accent);
+    transition: width ease-in-out 150ms;
+}
+
+a:hover::after {
+    width: 100%;
+    background: var(--accent-dark);
 }
 
 form.login {
@@ -132,24 +162,29 @@ form.login {
 
 form.login input {
     width: 95%;
-    aspect-ratio: 12;
+    height: 24px;
     
     border-radius: var(--br-med);
+
+    color: var(--text-color);
 
     font-size: 100%;
 }
 
 form.login button {
     width: 35%;
-    aspect-ratio: 4;
+    height: 36px;
 
     border-radius: var(--br-med);
 
     background: var(--accent);
+
+    transition: 120ms ease-in-out;
 }
 
 form.login button:hover {
     background: var(--accent-dark);
+    transform: scale(1.1) rotate(1deg);
 }
 
 form.login .divider {
@@ -165,7 +200,7 @@ form.login .divider::before {
     content: "";
     width: 25%;
     height: 1px;
-    background: white;
+    background: var(--text);
 
     position: relative;
     top: 0px;
@@ -178,7 +213,7 @@ form.login .divider::after {
     content: "";
     width: 25%;
     height: 1px;
-    background: white;
+    background: var(--text);
 
     position: relative;
     top: 0px;
@@ -195,7 +230,26 @@ form.login p {
 }
 
 form.login h3 {
-    font-size: 24px;
+    font-size: 240%;
     margin: 0px;
     padding: 0px;
+}
+
+@media (max-width: 1000px) {
+    form.login button {
+        width: 95%;
+        height: 40px;
+        font-size: 24px;
+    }
+
+    form.login input {
+        width: 95%;
+        height: 40px;
+        font-size: 24px;
+    }
+
+    form.login {
+        width: 55%;
+        transform: scale(1.5) translate(-33%, -33%);
+    }
 }
