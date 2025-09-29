@@ -1,0 +1,89 @@
+/* 
+    BUA Assassins main stylesheet
+
+    This controls the styling across the entire website including, colors, border radius and fonts.
+    The the items beginning with -- under Variables and Color themes control styling 
+    (do not change the styling in individual elements unless necessary)
+*/
+
+/* Component imports */
+@import url("/static/styles/mobile.css"); /* CSS for mobile devices */
+@import url("/static/styles/form.css"); /* CSS for forms */
+@import url("/static/styles/components.css"); /* Basic components (ex. button, input) */
+@import url("/static/styles/modifiers.css"); /* Modifications that can be applied to any element */
+
+/* Variables */
+:root {
+    /* Colors */
+    --bg: #f7f7f7;
+    --mg: #efefef;
+    --fg: #e3e3e3;
+
+    --text: #222222;
+    --text-fg: #333333;
+
+    --accent: #e31f8e;
+    --accent-dark: #c41c7b;
+
+    /* Color variants */
+    --fg-dark: #2d2d2d;
+
+    /* Borders */
+    --br-small: 0.5cqh;
+    --br-med: 1cqh;
+    --br-large: 1.5cqh;
+
+    /* Spacing */
+    --padding-sm: 6px;
+    --padding-med: 8px;
+    --padding-large: 16px;
+
+    /* Fonts */
+    --font: sans-serif;
+}
+
+/* Color themes */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Colors */
+        --bg: #3e3e3e;
+        --mg: #2f2f2f;
+        --fg: #2b2b2b;
+
+        --text: #ffffff;
+        --text-fg: #333333;
+
+        --accent: #e31f8e;
+        --accent-dark: #c41c7b;
+
+        /* Color variants */
+        --fg-dark: #dedede;
+    }
+}
+
+/* Backgrounds and document flow */
+html {
+    display: block;
+
+    width: 100vw;
+    height: 100vh;
+
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+
+    font-family: var(--font);
+
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+
+    display: flex;
+
+    flex-direction: column;
+}

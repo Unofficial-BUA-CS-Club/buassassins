@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin Panel</title>
+        <link rel="stylesheet" href="/static/styles/index.css"> 
+    </head>
+    <body class="center-vertical">
+        <script>
+            async function loadUsers() { 
+                await fetch("/api/users")
+                    .then(response => response.json())
+                    .then(data => {
+                        const users = data;
+                        console.log(users);
+                        users.forEach(user => {
+                            const card = document.createElement('div');
+                            card.className = 'card br-small';
+                            card.style = "width: 75%; height: 75px;";
+                            
+                            const username = document.createElement('p');
+                            username.innerText = `Username: ${user.username}`;
+                            card.appendChild(username);
+
+                            const id = document.createElement('p');
+                            id.innerText = `ID: ${user.id}`;
+                            card.appendChild(id);
+
+                            document.body.appendChild(card);
+                        });
+                    })
+            }
+
+            loadUsers();
+        </script>
+    </body>
+</html>

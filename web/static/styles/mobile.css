@@ -1,0 +1,18 @@
+@media (max-width: 1000px) {
+    form.login button {
+        width: 95%;
+        height: 40px;
+        font-size: 24px;
+    }
+
+    form.login input {
+        width: 95%;
+        height: 40px;
+        font-size: 24px;
+    }
+
+    form.login {
+        width: 55%;
+        transform: scale(1.5) translate(-33%, -33%);
+    }
+}

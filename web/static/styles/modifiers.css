@@ -1,0 +1,31 @@
+.center-horizontal { 
+    justify-content: center;
+}
+
+.center-vertical {
+    align-items: center;
+}
+
+.br-small {
+    border-radius: var(--br-small);
+}
+
+.br-med {
+    border-radius: var(--br-med);
+}
+
+.br-lg {
+    border-radius: var(--br-large);
+}
+
+.pad-small {
+    border-radius: var(--padding-small);
+}
+
+.pad-med {
+    border-radius: var(--padding-med);
+}
+
+.pad-lg {
+    border-radius: var(--padding-large);
+}

@@ -21,7 +21,7 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: false, // set to true when using HTTPS
-        maxAge: 1000 * 60 * 60 * 24 * 1 // 1 day
+        maxAge: 1000 * 60 * 60 * 24 * 30 // 1 day
     }
 }));
 
@@ -48,11 +48,37 @@ const User = sequelize.define("User", {
         unique: true,
         primaryKey: true,
         autoIncrement: true
+    },
+    kills: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
+    permissionLevel: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     }
 })
 
-sequelize.sync().then(() => {
+
+// FINISH THIS
+const App = sequelize.define("App", {
+    newInstance: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+    },
+    gameRunning: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    id: {
+        type: DataTypes
+    }
+});
+
+sequelize.sync().then(async () => {
     console.log("SQLite database synced!");
+    await App.upsert()
 });
 
 // Root
@@ -72,6 +98,10 @@ app.get("/login", (req, res) => {
         res.redirect("/");
     }
 })
+
+async function redirectToAccountManagement() {
+    await App.findOne({ where: {} })
+}
 
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
@@ -105,9 +135,29 @@ app.post("/register", async(req, res) => {
     if (existingUser === null) {
         const hashedPassword = await bcrypt.hash(password, 10);
         await User.create({ username:username, password:hashedPassword });
+        await 
         res.redirect("/login");
     } else {
         res.redirect("/register");
+    }
+});
+
+// Admin dashboard
+app.get("/admin", (req, res) => {
+    if (req.session.logged_in) {
+        res.sendFile(path.join(__dirname, 'public', 'admin', 'index.html'))
+    } else {
+        res.redirect("/login")
+    }
+});
+
+// API
+app.get("/api/users", async (req, res) => {
+    if (req.session.logged_in) {
+        const users = await User.findAll({ attributes: ['username', 'id'] });
+        res.json(users)
+    } else {
+        res.json("Authentication error");
     }
 });
 

@@ -1,0 +1,92 @@
+form.login {
+    position: absolute;
+    display: flex;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
+
+    width: 25%;
+}
+
+form.login input {
+    width: 95%;
+    height: 24px;
+    
+    border-radius: var(--br-med);
+
+    color: var(--text-color);
+
+    font-size: 100%;
+}
+
+form.login button {
+    width: 35%;
+    height: 36px;
+
+    border-radius: var(--br-med);
+
+    background: var(--accent);
+
+    transition: 120ms ease-in-out;
+}
+
+form.login button:hover {
+    background: var(--accent-dark);
+    transform: scale(1.1) rotate(1deg);
+}
+
+form.login .divider {
+    font-size: 11px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+form.login .divider::before {
+    content: "";
+    width: 25%;
+    height: 1px;
+    background: var(--text);
+
+    position: relative;
+    top: 0px;
+    left: -15px;
+
+    display: block;
+}
+
+form.login .divider::after {
+    content: "";
+    width: 25%;
+    height: 1px;
+    background: var(--text);
+
+    position: relative;
+    top: 0px;
+    left: 15px;
+
+    display: block;
+}
+
+form.login p {
+    font-size: 12px;
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 10px;
+}
+
+form.login h3 {
+    font-size: 240%;
+    margin: 0px;
+    padding: 0px;
+}

@@ -1,0 +1,81 @@
+/* Interactive elements */
+button {
+    background: var(--fg);
+    color: var(--text-fg);
+
+    border: none;
+    border-radius: var(--br-small);
+
+    padding: var(--padding-sm);
+
+    font-family: var(--font);
+}
+
+button:hover {
+    background: var(--fg-dark);
+
+    cursor: pointer;
+}
+
+input {
+    background: var(--fg);
+    color: var(--text-fg);
+
+    border: none;
+    border-radius: var(--br-small);
+
+    padding: var(--padding-sm);
+
+    font-family: var(--font);
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent);
+
+    font-family: var(--font);
+
+    display: flex;
+    align-items: center;
+    flex-direction:column;
+}
+
+a:hover {
+    color: var(--accent-dark);
+}
+
+a::after {
+    content: "";
+    display: block;
+    width: 0px;
+    height: 2px;
+    transform: translateY(2.5px);
+    background: var(--accent);
+    transition: width ease-in-out 150ms;
+}
+
+a:hover::after {
+    width: 100%;
+    background: var(--accent-dark);
+}
+
+.card {
+    display: flex;
+    background-color: var(--mg);
+    padding: var(--padding-sm);
+
+    flex-direction: column;
+
+    align-items: flex-start;
+    gap: 0;
+
+    margin-top: var(--padding-large);
+}
+
+.card p {
+    display: flex;
+    margin: 0px;
+    margin-left: var(--padding-sm);
+    margin-top: var(--padding-sm);
+    padding: 0px;
+}
