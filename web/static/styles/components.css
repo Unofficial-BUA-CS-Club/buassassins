@@ -70,6 +70,9 @@ a:hover::after {
     gap: 0;
 
     margin-top: var(--padding-large);
+    position: relative;
+
+    overflow-wrap: anywhere;
 }
 
 .card p {
@@ -78,4 +81,32 @@ a:hover::after {
     margin-left: var(--padding-sm);
     margin-top: var(--padding-sm);
     padding: 0px;
+}
+
+.usercard .delete {
+    top: 10px;
+    right: 10px;
+    width: 28;
+    aspect-ratio: 1;
+    border-radius: var(--br-small);
+    background: var(--fg);
+    transition-duration: 125ms;
+
+    display: block;
+    position: absolute;
+
+    overflow: hidden;
+}
+
+.usercard .delete:hover {
+    background: var(--accent);
+    transform: scale(1.1) rotate(2deg);
+}
+
+.usercard .delete svg * {
+    fill: #dfdfdf;
+}
+
+.usercard .delete:hover svg * {
+    fill: black;
 }

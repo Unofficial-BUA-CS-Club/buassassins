@@ -46,8 +46,8 @@
 @media (prefers-color-scheme: dark) {
     :root {
         /* Colors */
-        --bg: #3e3e3e;
-        --mg: #2f2f2f;
+        --bg: #4e4e4e;
+        --mg: #3f3f3f;
         --fg: #2b2b2b;
 
         --text: #ffffff;
@@ -57,7 +57,7 @@
         --accent-dark: #c41c7b;
 
         /* Color variants */
-        --fg-dark: #dedede;
+        --fg-dark: #0a0a0a;
     }
 }
 

@@ -72,13 +72,16 @@ const App = sequelize.define("App", {
         defaultValue: false
     },
     id: {
-        type: DataTypes
+        type: DataTypes.INTEGER,
+        unique: true,
+        primaryKey: true,
+        autoIncrement: true
     }
 });
 
 sequelize.sync().then(async () => {
     console.log("SQLite database synced!");
-    await App.upsert()
+    await App.upsert({ id: 1 })
 });
 
 // Root
@@ -97,17 +100,16 @@ app.get("/login", (req, res) => {
     } else {
         res.redirect("/");
     }
-})
-
-async function redirectToAccountManagement() {
-    await App.findOne({ where: {} })
-}
+});
 
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ where: { username:username } });
     if (user && await bcrypt.compare(password, user.password)) {
         req.session.logged_in = true;
+        console.log(user.id);
+        req.session.uid = user.id;
+        console.log(req.session.uid)
         res.redirect("/")
     } else {
         res.redirect("/login");
@@ -121,9 +123,14 @@ app.get("/logout", (req, res) => {
 });
 
 // User registration
-app.get("/register", (req, res) => {
+app.get("/register", async (req, res) => {
     if (!req.session.logged_in) {
-        res.sendFile(path.join(__dirname, 'public', 'register', 'index.html'));
+        const app = await App.findOne({ where: { id: 1 } });
+        if (app.newInstance) {
+            res.sendFile(path.join(__dirname, 'public', 'newApp', 'index.html'));
+        } else {
+            res.sendFile(path.join(__dirname, 'public', 'register', 'index.html'));
+        }
     } else {
         res.redirect("/");
     }
@@ -133,9 +140,15 @@ app.post("/register", async(req, res) => {
     const { username, password } = req.body;
     const existingUser = await User.findOne({ where: { username:username } })
     if (existingUser === null) {
+        let permlevel = 0
+        const app = await App.findOne({ where: { id: 1 } });
+        if (app.newInstance) {
+            permlevel = 2;
+            app.update({ newInstance: false });
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
-        await User.create({ username:username, password:hashedPassword });
-        await 
+        await User.create({ username:username, password:hashedPassword, permissionLevel:permlevel});
+        
         res.redirect("/login");
     } else {
         res.redirect("/register");
@@ -143,9 +156,14 @@ app.post("/register", async(req, res) => {
 });
 
 // Admin dashboard
-app.get("/admin", (req, res) => {
+app.get("/admin", async (req, res) => {
     if (req.session.logged_in) {
-        res.sendFile(path.join(__dirname, 'public', 'admin', 'index.html'))
+        const user = await User.findOne({ where: { id: req.session.uid } });
+        if (user.id === req.session.uid && user.permissionLevel === 1 || user.permissionLevel === 2) {
+            res.sendFile(path.join(__dirname, 'public', 'admin', 'index.html'))
+        } else {
+            res.redirect("/")
+        }
     } else {
         res.redirect("/login")
     }
@@ -153,8 +171,9 @@ app.get("/admin", (req, res) => {
 
 // API
 app.get("/api/users", async (req, res) => {
-    if (req.session.logged_in) {
-        const users = await User.findAll({ attributes: ['username', 'id'] });
+    const user = await User.findOne({ where: {id: req.session.uid} });
+    if (req.session.logged_in && user.permissionLevel == 1 || user.permissionLevel == 2) {
+        const users = await User.findAll({ attributes: ['username', 'id', 'permissionLevel'] });  
         res.json(users)
     } else {
         res.json("Authentication error");
