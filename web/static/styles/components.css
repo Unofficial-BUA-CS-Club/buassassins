@@ -100,7 +100,7 @@ a:hover::after {
 
 .usercard .delete:hover {
     background: var(--accent);
-    transform: scale(1.1) rotate(2deg);
+    transform: scale(1.1) rotate(4deg);
 }
 
 .usercard .delete svg * {
@@ -108,5 +108,67 @@ a:hover::after {
 }
 
 .usercard .delete:hover svg * {
+    fill: black;
+}
+
+
+.usercard .promote {
+    bottom: 10px;
+    right: 10px;
+    width: 28;
+    aspect-ratio: 1;
+    border-radius: var(--br-small);
+    background: var(--fg);
+    transition-duration: 125ms;
+
+    display: block;
+    position: absolute;
+
+    overflow: hidden;
+}
+
+.usercard .promote:hover {
+    background: var(--accent-blue);
+    transform: scale(1.1) rotate(4deg);
+}
+
+.usercard .promote svg * {
+    fill: #dfdfdf;
+}
+
+.usercard .promote:hover svg * {
+    fill: black;
+}
+
+
+.usercard .demote {
+    bottom: 10px;
+    right: 10px;
+    width: 28;
+    aspect-ratio: 1;
+    border-radius: var(--br-small);
+    background: var(--fg);
+    transition-duration: 125ms;
+
+    display: block;
+    position: absolute;
+
+    overflow: hidden;
+}
+
+.usercard .demote:hover {
+    background: var(--accent-blue);
+    transform: scale(1.1) rotate(4deg);
+}
+
+.usercard .demote svg {
+    transform: rotate(180deg);
+}
+
+.usercard .demote svg * {
+    fill: #dfdfdf;
+}
+
+.usercard .demote:hover svg * {
     fill: black;
 }

@@ -56,6 +56,12 @@
         --accent: #e31f8e;
         --accent-dark: #c41c7b;
 
+        --accent-green: #1fe38e;
+        --accent-dark-green: #1cc47b;
+
+        --accent-blue: #1f8ee3;
+        --accent-dark-blue: #1c7bc4;
+
         /* Color variants */
         --fg-dark: #0a0a0a;
     }

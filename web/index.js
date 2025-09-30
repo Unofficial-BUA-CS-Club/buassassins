@@ -11,6 +11,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(cookieParser());
 app.use(session({
@@ -75,7 +76,7 @@ const App = sequelize.define("App", {
         type: DataTypes.INTEGER,
         unique: true,
         primaryKey: true,
-        autoIncrement: true
+        //autoIncrement: true
     }
 });
 
@@ -147,7 +148,12 @@ app.post("/register", async(req, res) => {
             app.update({ newInstance: false });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        await User.create({ username:username, password:hashedPassword, permissionLevel:permlevel});
+        await User.create({ 
+            username:username, 
+            password:hashedPassword, 
+            permissionLevel:permlevel, 
+            id:Math.round(Math.random() * 999999999)
+        });
         
         res.redirect("/login");
     } else {
@@ -173,8 +179,47 @@ app.get("/admin", async (req, res) => {
 app.get("/api/users", async (req, res) => {
     const user = await User.findOne({ where: {id: req.session.uid} });
     if (req.session.logged_in && user.permissionLevel == 1 || user.permissionLevel == 2) {
-        const users = await User.findAll({ attributes: ['username', 'id', 'permissionLevel'] });  
+        const users = await User.findAll({ attributes: ['username', 'id', 'permissionLevel', 'kills'] });  
         res.json(users)
+    } else {
+        res.json("Authentication error");
+    }
+});
+
+app.post("/api/delete", async (req, res) => {
+    const user = await User.findOne({ where: {id: req.session.uid} });
+    if (req.session.logged_in && user.permissionLevel == 1 || user.permissionLevel == 2) {
+        const targetUser = await User.findOne({ where: {id: req.body.target} });
+        console.log(req.body.target);
+        try {
+            await targetUser.destroy();
+        } catch {}
+        res.json("success");
+        res.redirect("/admin");
+    } else {
+        res.json("Authentication error");
+    }
+});
+
+app.post("/api/promote", async (req, res) => {
+    const user = await User.findOne({ where: {id: req.session.uid} });
+    if (req.session.logged_in && user.permissionLevel == 1 || user.permissionLevel == 2) {
+        const targetUser = await User.findOne({ where: {id: req.body.target} });
+        targetUser.update({ permissionLevel: 1 })
+        res.json("success");
+        res.redirect("/admin");
+    } else {
+        res.json("Authentication error");
+    }
+});
+
+app.post("/api/demote", async (req, res) => {
+    const user = await User.findOne({ where: {id: req.session.uid} });
+    if (req.session.logged_in && user.permissionLevel == 1 || user.permissionLevel == 2) {
+        const targetUser = await User.findOne({ where: {id: req.json.target} });
+        targetUser.update({ permissionLevel: 0 })
+        res.json("success");
+        res.redirect("/admin");
     } else {
         res.json("Authentication error");
     }
